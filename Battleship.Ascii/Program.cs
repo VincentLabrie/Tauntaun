@@ -16,6 +16,8 @@ namespace Battleship.Ascii
 
         private static Grid grid = new Grid(8);
 
+        private static List<Position> enemyShootPositions = new List<Position>();
+
         static void Main()
         {
             Console.Title = "Battleship";
@@ -93,8 +95,14 @@ namespace Battleship.Ascii
                 }
 
                 Console.WriteLine(isHit ? "Yeah ! Nice hit !" : "Miss");
+                do
+                {
+                    position = GetRandomPosition();
 
-                position = GetRandomPosition();
+                }
+                while (enemyShootPositions.Contains(position));
+                enemyShootPositions.Add(position);
+
                 isHit = GameController.CheckIsHit(myFleet, position);
                 Console.WriteLine();
                 Console.WriteLine("Computer shot in {0}{1} and {2}", position.Column, position.Row, isHit ? "has hit your ship !" : "miss");
@@ -139,6 +147,7 @@ namespace Battleship.Ascii
 
         private static Position GetRandomPosition()
         {
+            
             int rows = 8;
             int lines = 8;
             var random = new Random();
