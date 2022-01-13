@@ -179,21 +179,22 @@ namespace Battleship.Ascii
 
             Console.WriteLine("Please position your fleet (Game board size is from A to H and 1 to 8) :");
 
-         foreach (var ship in myFleet)
-         {
-            Console.WriteLine();
-            Console.WriteLine("Please enter the starting position for the {0} (size: {1}) : ", ship.Name, ship.Size);
+            foreach (var ship in myFleet)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Please enter the starting position for the {0} (size: {1}) : ", ship.Name, ship.Size);
 
-            string position1 = Console.ReadLine();
-            HandleInput(position1, ship, 1);
+                string position1 = Console.ReadLine();
+                HandleInput(position1, ship, 1);
 
-            Console.WriteLine("Please enter the second position for the {0} (size: {1}) : ", ship.Name, ship.Size);
+                Console.WriteLine("Please enter the second position for the {0} (size: {1}) : ", ship.Name, ship.Size);
 
-            string position2 = Console.ReadLine();
-            HandleInput(position2, ship, 2);
+                string position2 = Console.ReadLine();
+                HandleInput(position2, ship, 2);
+            }
         }
 
-      private static void HandleInput(string position, Ship ship, int positionIndex)
+        private static void HandleInput(string position, Ship ship, int positionIndex)
       {
           bool isValid = false;
 
