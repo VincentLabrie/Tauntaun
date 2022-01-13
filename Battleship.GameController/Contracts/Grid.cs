@@ -2,13 +2,12 @@ namespace Battleship.GameController.Contracts
 {
     public class Grid
     {
-        public Grid(int rows, int columns)
+        public Grid(int rows)
         {
             Rows = rows;
-            Columns = columns;
         }
 
-        public int Columns { get; set; }
+        public Letters Columns { get; }
         public int Rows { get; set; }
     }
 }
