@@ -201,10 +201,10 @@ namespace Battleship.Ascii
             enemyFleet[0].Positions.Add(new Position { Column = Letters.B, Row = 7 });
             enemyFleet[0].Positions.Add(new Position { Column = Letters.B, Row = 8 });
 
+            enemyFleet[1].Positions.Add(new Position { Column = Letters.E, Row = 5 });
             enemyFleet[1].Positions.Add(new Position { Column = Letters.E, Row = 6 });
             enemyFleet[1].Positions.Add(new Position { Column = Letters.E, Row = 7 });
             enemyFleet[1].Positions.Add(new Position { Column = Letters.E, Row = 8 });
-            enemyFleet[1].Positions.Add(new Position { Column = Letters.E, Row = 9 });
 
             enemyFleet[2].Positions.Add(new Position { Column = Letters.A, Row = 3 });
             enemyFleet[2].Positions.Add(new Position { Column = Letters.B, Row = 3 });
