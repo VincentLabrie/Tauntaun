@@ -76,6 +76,20 @@ namespace Battleship.Ascii
                     Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
                     Console.WriteLine(@"                 -\  \     /  /-");
                     Console.WriteLine(@"                   \  \   /  /");
+
+
+                    if(!enemyFleet.Any())
+                    {
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"** You are the Winner*****");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        return 0;
+                    }
                 }
 
                 Console.WriteLine(isHit ? "Yeah ! Nice hit !" : "Miss");
@@ -96,6 +110,20 @@ namespace Battleship.Ascii
                     Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
                     Console.WriteLine(@"                 -\  \     /  /-");
                     Console.WriteLine(@"                   \  \   /  /");
+
+
+                    if(!myFleet.Any())
+                    {
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"** The Computer is the Winner*****");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        return 0;
+                    }
 
                 }
             }
