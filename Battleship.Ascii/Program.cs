@@ -78,7 +78,7 @@ namespace Battleship.Ascii
                     Console.WriteLine(@"                   \  \   /  /");
 
 
-                    if(!enemyFleet.Any())
+                    if(!enemyFleet[0].Positions.Any() && !enemyFleet[1].Positions.Any() && !enemyFleet[2].Positions.Any() && !enemyFleet[3].Positions.Any() && !enemyFleet[4].Positions.Any())
                     {
                         Console.WriteLine(@"**************************");
                         Console.WriteLine(@"**************************");
@@ -112,7 +112,7 @@ namespace Battleship.Ascii
                     Console.WriteLine(@"                   \  \   /  /");
 
 
-                    if(!myFleet.Any())
+                    if(!myFleet[0].Positions.Any() && !myFleet[1].Positions.Any() && !myFleet[2].Positions.Any() && !myFleet[3].Positions.Any() && !myFleet[4].Positions.Any())
                     {
                         Console.WriteLine(@"**************************");
                         Console.WriteLine(@"**************************");
