@@ -77,6 +77,20 @@ namespace Battleship.Ascii
                     Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
                     Console.WriteLine(@"                 -\  \     /  /-");
                     Console.WriteLine(@"                   \  \   /  /");
+
+
+                    if(!enemyFleet[0].Positions.Any() && !enemyFleet[1].Positions.Any() && !enemyFleet[2].Positions.Any() && !enemyFleet[3].Positions.Any() && !enemyFleet[4].Positions.Any())
+                    {
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"** You are the Winner*****");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        return;
+                    }
                 }
 
                 Console.WriteLine(isHit ? "Yeah ! Nice hit !" : "Miss");
@@ -97,6 +111,20 @@ namespace Battleship.Ascii
                     Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
                     Console.WriteLine(@"                 -\  \     /  /-");
                     Console.WriteLine(@"                   \  \   /  /");
+
+
+                    if(!myFleet[0].Positions.Any() && !myFleet[1].Positions.Any() && !myFleet[2].Positions.Any() && !myFleet[3].Positions.Any() && !myFleet[4].Positions.Any())
+                    {
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"** The Computer is the Winner*****");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        Console.WriteLine(@"**************************");
+                        return;
+                    }
 
                 }
             }
