@@ -133,13 +133,97 @@ namespace Battleship.Ascii
          foreach (var ship in myFleet)
          {
             Console.WriteLine();
-            Console.WriteLine("Please enter the positions for the {0} (size: {1})", ship.Name, ship.Size);
-            for (var i = 1; i <= ship.Size; i++)
-            {
-               Console.WriteLine("Enter position {0} of {1} (i.e A3):", i, ship.Size);
-               ship.AddPosition(Console.ReadLine());
-            }
+            Console.WriteLine("Please enter the starting position for the {0} (size: {1}) : ", ship.Name, ship.Size);
+
+            string position1 = Console.ReadLine();
+            HandleInput(position1, ship, 1);
+
+            Console.WriteLine("Please enter the second position for the {0} (size: {1}) : ", ship.Name, ship.Size);
+
+            string position2 = Console.ReadLine();
+            HandleInput(position2, ship, 2);
          }
+      }
+
+      private static void HandleInput(string position, Ship ship, int positionIndex)
+      {
+          bool isValid = false;
+
+          while (isValid == false)
+          {
+              try
+              {
+                  if ((positionIndex == 1 && IsStartingPositionValid(position)) || (positionIndex == 2 && IsSecondPositionValid(ship, position)))
+                  {
+                      isValid = true;
+                      ship.AddPosition(position);
+
+                      if (positionIndex == 2) //Wee need to add the rest of the ship
+                      {
+                          Position position1 = ship.Positions[0];
+                          Position position2 = ship.Positions[1];
+
+                          int rowDelta = position2.Row - position1.Row;
+                          int columnDelta = position2.Column - position1.Column;
+
+                          Position lastInsertedPosition = position2;
+
+                          for (int i = positionIndex; i <= ship.Size ; i++)
+                          {
+                              Position newPosition = new Position(lastInsertedPosition.Column + columnDelta, lastInsertedPosition.Row + rowDelta);
+                              ship.Positions.Add(newPosition);
+                              lastInsertedPosition = newPosition;
+                          }
+                      }
+                  }
+                  else
+                  {
+                      Console.WriteLine("The value you entered is invalid. Please enter a valid position : ");
+                      position = Console.ReadLine();
+                  }
+              }
+              catch
+              {
+                  Console.WriteLine("The value you entered is invalid. Please enter a valid position : ");
+                  position = Console.ReadLine();
+              }
+          }
+      }
+
+      private static bool IsStartingPositionValid(string input)
+      {
+          Position position = ParsePosition(input);
+
+          return position.Row >= 1 && position.Row <= 8 && !myFleet.SelectMany(x => x.Positions).Contains(position);
+      }
+
+      private static bool IsSecondPositionValid(Ship ship, string input)
+      {
+          Position position1 = ship.Positions.First();
+
+            //Get all valid positions
+          List<Position> validPositions = new List<Position>();
+
+          Position up = new Position(position1.Column, position1.Row - 1);
+          Position down = new Position(position1.Column, position1.Row + 1);
+          Position left = new Position(position1.Column - 1, position1.Row);
+          Position right = new Position(position1.Column + 1, position1.Row);
+
+            if (position1.Row - ship.Size >= 0 && !myFleet.SelectMany(x => x.Positions).Contains(up)) //up
+                validPositions.Add(up);
+
+            if(position1.Row + ship.Size <= 8 && !myFleet.SelectMany(x => x.Positions).Contains(down)) // down
+                validPositions.Add(down);
+
+            if(position1.Column - ship.Size >= 0 && !myFleet.SelectMany(x => x.Positions).Contains(left)) //left
+                validPositions.Add(left);
+
+            if (position1.Column + ship.Size <= Letters.H && !myFleet.SelectMany(x => x.Positions).Contains(right)) //right
+                validPositions.Add(right);
+
+          Position position = ParsePosition(input);
+
+          return validPositions.Contains(position);
       }
 
       private static void InitializeEnemyFleet()
