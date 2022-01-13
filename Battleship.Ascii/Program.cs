@@ -1,4 +1,5 @@
 ﻿
+using System;
 namespace Battleship.Ascii
 {
     using System;
@@ -132,9 +133,26 @@ namespace Battleship.Ascii
 
         public static Position ParsePosition(string input)
         {
-            var letter = (Letters)Enum.Parse(typeof(Letters), input.ToUpper().Substring(0, 1));
-            var number = int.Parse(input.Substring(1, 1));
-            return new Position(letter, number);
+            bool isPositionValid;
+            string letter = input;
+            int number;
+
+            do
+            {
+                letter = input.ToUpper().Substring(0, 1);
+                int.TryParse(input.Substring(1, 1), out number);
+
+                isPositionValid = Enum.IsDefined(typeof(Letters), letter) && number >= 1 && number <= grid.Rows;
+
+                if (!isPositionValid)
+                {
+                    Console.WriteLine("Coordinates are invalid!");
+                    Console.WriteLine("Enter coordinates for your shot :");
+                    input = Console.ReadLine();
+                }
+            } while (!isPositionValid);
+
+            return new Position((Letters)Enum.Parse(typeof(Letters), letter), number);
         }
 
         private static Position GetRandomPosition()
@@ -266,10 +284,10 @@ namespace Battleship.Ascii
             enemyFleet[0].Positions.Add(new Position { Column = Letters.B, Row = 7 });
             enemyFleet[0].Positions.Add(new Position { Column = Letters.B, Row = 8 });
 
+            enemyFleet[1].Positions.Add(new Position { Column = Letters.E, Row = 5 });
             enemyFleet[1].Positions.Add(new Position { Column = Letters.E, Row = 6 });
             enemyFleet[1].Positions.Add(new Position { Column = Letters.E, Row = 7 });
             enemyFleet[1].Positions.Add(new Position { Column = Letters.E, Row = 8 });
-            enemyFleet[1].Positions.Add(new Position { Column = Letters.E, Row = 9 });
 
             enemyFleet[2].Positions.Add(new Position { Column = Letters.A, Row = 3 });
             enemyFleet[2].Positions.Add(new Position { Column = Letters.B, Row = 3 });
