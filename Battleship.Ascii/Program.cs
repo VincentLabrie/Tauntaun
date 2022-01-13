@@ -21,7 +21,7 @@ namespace Battleship.Ascii
 
         #region Constructors --------------------------------------------------
 
-        private static void Main()
+      
         private static List<Position> enemyShootPositions = new List<Position>();
 
         static void Main()
@@ -144,7 +144,7 @@ namespace Battleship.Ascii
                 while (enemyShootPositions.Contains(position));
                 enemyShootPositions.Add(position);
 
-                isHit = GameController.CheckIsHit(myFleet, position);
+                isHit = GameController.GameController.CheckIsHit(myFleet, position);
                 Console.WriteLine();
                 Console.WriteLine("Computer shot in {0}{1} and {2}", position.Column, position.Row, isHit ? "has hit your ship !" : "miss");
                 if (isHit)
