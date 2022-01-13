@@ -47,7 +47,7 @@ namespace Battleship.GameController
                 {
                     if (position.Equals(shot))
                     {
-                        ship.remove(position);
+                        ship.Positions.Remove(position);
                         return true;
                     }
                 }

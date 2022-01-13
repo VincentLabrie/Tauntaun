@@ -88,7 +88,7 @@ namespace Battleship.Ascii
                         Console.WriteLine(@"**************************");
                         Console.WriteLine(@"**************************");
                         Console.WriteLine(@"**************************");
-                        return 0;
+                        return;
                     }
                 }
 
@@ -122,7 +122,7 @@ namespace Battleship.Ascii
                         Console.WriteLine(@"**************************");
                         Console.WriteLine(@"**************************");
                         Console.WriteLine(@"**************************");
-                        return 0;
+                        return;
                     }
 
                 }
