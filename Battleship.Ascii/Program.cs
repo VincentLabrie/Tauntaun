@@ -88,9 +88,9 @@ namespace Battleship.Ascii
         private static void StartGame()
         {
             Console.Clear();
-            Console.WriteLine("                  __");
+            Console.WriteLine("                   __");
             Console.WriteLine(@"                 /  \");
-            Console.WriteLine("           .-.  |    |");
+            Console.WriteLine("           .-.   |    |");
             Console.WriteLine(@"   *    _.-'  \  \__/");
             Console.WriteLine(@"    \.-'       \");
             Console.WriteLine("   /          _/");
@@ -116,14 +116,26 @@ namespace Battleship.Ascii
                 {
                     Console.Beep();
 
-                    Console.WriteLine(@"                \         .  ./");
-                    Console.WriteLine(@"              \      .:"";'.:..""   /");
-                    Console.WriteLine(@"                  (M^^.^~~:.'"").");
-                    Console.WriteLine(@"            -   (/  .    . . \ \)  -");
-                    Console.WriteLine(@"               ((| :. ~ ^  :. .|))");
-                    Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
-                    Console.WriteLine(@"                 -\  \     /  /-");
-                    Console.WriteLine(@"                   \  \   /  /");
+                    //Console.WriteLine(@"                \         .  ./");
+                    //Console.WriteLine(@"              \      .:"";'.:..""   /");
+                    //Console.WriteLine(@"                  (M^^.^~~:.'"").");
+                    //Console.WriteLine(@"            -   (/  .    . . \ \)  -");
+                    //Console.WriteLine(@"               ((| :. ~ ^  :. .|))");
+                    //Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
+                    //Console.WriteLine(@"                 -\  \     /  /-");
+                    //Console.WriteLine(@"                   \  \   /  /");
+
+                    Console.WriteLine(@"     _.-^^---....,,--       ");
+                    Console.WriteLine(@" _--                  --_  ");
+                    Console.WriteLine(@"<                        >)");
+                    Console.WriteLine(@"|                         | ");
+                    Console.WriteLine(@" \._                   _./  ");
+                    Console.WriteLine(@"    ```--. . , ; .--'''       ");
+                    Console.WriteLine(@"          | |   |             ");
+                    Console.WriteLine(@"       .-=||  | |=-.   ");
+                    Console.WriteLine(@"       `-=#$%&%$#=-'   ");
+                    Console.WriteLine(@"          | ;  :|     ");
+                    Console.WriteLine(@"_____.,-#%&$@%#&#~,._____");
 
 
                     if (!enemyFleet[0].Positions.Any() && !enemyFleet[1].Positions.Any() && !enemyFleet[2].Positions.Any() && !enemyFleet[3].Positions.Any() && !enemyFleet[4].Positions.Any())
@@ -182,14 +194,26 @@ namespace Battleship.Ascii
                 {
                     Console.Beep();
 
-                    Console.WriteLine(@"                \         .  ./");
-                    Console.WriteLine(@"              \      .:"";'.:..""   /");
-                    Console.WriteLine(@"                  (M^^.^~~:.'"").");
-                    Console.WriteLine(@"            -   (/  .    . . \ \)  -");
-                    Console.WriteLine(@"               ((| :. ~ ^  :. .|))");
-                    Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
-                    Console.WriteLine(@"                 -\  \     /  /-");
-                    Console.WriteLine(@"                   \  \   /  /");
+                    //Console.WriteLine(@"                \         .  ./");
+                    //Console.WriteLine(@"              \      .:"";'.:..""   /");
+                    //Console.WriteLine(@"                  (M^^.^~~:.'"").");
+                    //Console.WriteLine(@"            -   (/  .    . . \ \)  -");
+                    //Console.WriteLine(@"               ((| :. ~ ^  :. .|))");
+                    //Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
+                    //Console.WriteLine(@"                 -\  \     /  /-");
+                    //Console.WriteLine(@"                   \  \   /  /");
+
+                    Console.WriteLine(@"     _.-^^---....,,--       ");
+                    Console.WriteLine(@" _--                  --_  ");
+                    Console.WriteLine(@"<                        >)");
+                    Console.WriteLine(@"|                         | ");
+                    Console.WriteLine(@" \._                   _./  ");
+                    Console.WriteLine(@"    ```--. . , ; .--'''       ");
+                    Console.WriteLine(@"          | |   |             ");
+                    Console.WriteLine(@"       .-=||  | |=-.   ");
+                    Console.WriteLine(@"       `-=#$%&%$#=-'   ");
+                    Console.WriteLine(@"          | ;  :|     ");
+                    Console.WriteLine(@"_____.,-#%&$@%#&#~,._____");
 
 
                     if (!myFleet[0].Positions.Any() && !myFleet[1].Positions.Any() && !myFleet[2].Positions.Any() && !myFleet[3].Positions.Any() && !myFleet[4].Positions.Any())
