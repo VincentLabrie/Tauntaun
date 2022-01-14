@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Battleship.GameController.Contracts;
+using NAudio.Wave;
 
 namespace Battleship.Ascii
 {
@@ -14,7 +16,7 @@ namespace Battleship.Ascii
 
         private static List<Ship> enemyFleet;
 
-        private static readonly Grid grid = new Grid(8);
+        private static readonly Grid grid = new Grid(10);
 
         #endregion
 
@@ -87,160 +89,196 @@ namespace Battleship.Ascii
 
         private static void StartGame()
         {
-            //Console.Clear();
-            Console.WriteLine("                   __");
-            Console.WriteLine(@"                 /  \");
-            Console.WriteLine("           .-.   |    |");
-            Console.WriteLine(@"   *    _.-'  \  \__/");
-            Console.WriteLine(@"    \.-'       \");
-            Console.WriteLine("   /          _/");
-            Console.WriteLine(@"  |      _  /""");
-            Console.WriteLine(@"  |     /_\'");
-            Console.WriteLine(@"   \    \_/");
-            Console.WriteLine(@"    """"""""");
+            
+                
+                //Console.Clear();
+                Console.WriteLine(@"                   __");
+                Console.WriteLine(@"                  /  \");
+                Console.WriteLine(@"            .-.  |    |");
+                Console.WriteLine(@"   *    _.-'  \   \__/");
+                Console.WriteLine(@"    \.-'       \");
+                Console.WriteLine(@"   /          _/");
+                Console.WriteLine(@"  |      _  /""");
+                Console.WriteLine(@"  |     /_\'");
+                Console.WriteLine(@"   \    \_/");
+                Console.WriteLine(@"    """"""""");
 
-            do
-            {
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("**************************");
-                Console.WriteLine("**Player, it's your turn**");
-                Console.WriteLine("**************************");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("");
-                Console.WriteLine("Enter coordinates for your shot :");
-                Position position = ParsePosition(Console.ReadLine());
-
-                bool isHit = GameController.GameController.CheckIsHit(enemyFleet, position);
-                if (isHit)
-                {
-                    Console.Beep();
-
-                    //Console.WriteLine(@"                \         .  ./");
-                    //Console.WriteLine(@"              \      .:"";'.:..""   /");
-                    //Console.WriteLine(@"                  (M^^.^~~:.'"").");
-                    //Console.WriteLine(@"            -   (/  .    . . \ \)  -");
-                    //Console.WriteLine(@"               ((| :. ~ ^  :. .|))");
-                    //Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
-                    //Console.WriteLine(@"                 -\  \     /  /-");
-                    //Console.WriteLine(@"                   \  \   /  /");
-
-                    Console.WriteLine(@"     _.-^^---....,,--       ");
-                    Console.WriteLine(@" _--                  --_  ");
-                    Console.WriteLine(@"<                        >)");
-                    Console.WriteLine(@"|                         | ");
-                    Console.WriteLine(@" \._                   _./  ");
-                    Console.WriteLine(@"    ```--. . , ; .--'''       ");
-                    Console.WriteLine(@"          | |   |             ");
-                    Console.WriteLine(@"       .-=||  | |=-.   ");
-                    Console.WriteLine(@"       `-=#$%&%$#=-'   ");
-                    Console.WriteLine(@"          | ;  :|     ");
-                    Console.WriteLine(@"_____.,-#%&$@%#&#~,._____");
-
-
-                    if (!enemyFleet[0].Positions.Any() && !enemyFleet[1].Positions.Any() && !enemyFleet[2].Positions.Any() && !enemyFleet[3].Positions.Any() && !enemyFleet[4].Positions.Any())
-                    {
-                        Console.WriteLine(@"**************************");
-                        Console.WriteLine(@"**************************");
-                        Console.WriteLine(@"**************************");
-                        Console.WriteLine(@"**************************");
-                        Console.WriteLine(@"** You are the Winner*****");
-                        Console.WriteLine(@"**************************");
-                        Console.WriteLine(@"**************************");
-                        Console.WriteLine(@"**************************");
-                        return;
-                    }
-                }
-
-                Console.WriteLine("");
-                if (!isHit)
-                {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("Miss");
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Yeah ! Nice hit !");
-                }
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("");
-
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("*****************************");
-                Console.WriteLine("**It's your opponent's turn**");
-                Console.WriteLine("*****************************");
-                Console.ForegroundColor = ConsoleColor.White;
                 do
                 {
-                    position = GetRandomPosition();
+                    using (var waveOut = new WaveOutEvent())
+                        using (var wavReader = new WaveFileReader(@"Explosion.wav"))
+                        {
+                            waveOut.Init(wavReader);
+                            Console.WriteLine();
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("**************************");
+                            Console.WriteLine("**Player, it's your turn**");
+                            Console.WriteLine("**************************");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine("");
+                            Console.WriteLine("Enter coordinates for your shot :");
 
+                            string input = Console.ReadLine();
+                            Position position = null;
+
+                            bool isValid = false;
+
+                            while (isValid == false)
+                            {
+                                try
+                                {
+                                    position = ParsePosition(input);
+                                    isValid = true;
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("The value you entered is invalid. Please enter a valid position : ");
+                                    input = Console.ReadLine();
+                                }
+                            }
+
+
+                            bool isHit = GameController.GameController.CheckIsHit(enemyFleet, position);
+                            if (isHit)
+                            {
+                                //Console.Beep();
+                                //Console.WriteLine(@"                \         .  ./");
+                                //Console.WriteLine(@"              \      .:"";'.:..""   /");
+                                //Console.WriteLine(@"                  (M^^.^~~:.'"").");
+                                //Console.WriteLine(@"            -   (/  .    . . \ \)  -");
+                                //Console.WriteLine(@"               ((| :. ~ ^  :. .|))");
+                                //Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
+                                //Console.WriteLine(@"                 -\  \     /  /-");
+                                //Console.WriteLine(@"                   \  \   /  /");
+
+                                Console.WriteLine(@"     _.-^^---....,,--       ");
+                                Console.WriteLine(@" _--                  --_  ");
+                                Console.WriteLine(@"<                        >)");
+                                Console.WriteLine(@"|                         | ");
+                                Console.WriteLine(@" \._                   _./  ");
+                                Console.WriteLine(@"    ```--. . , ; .--'''       ");
+                                Console.WriteLine(@"          | |   |             ");
+                                Console.WriteLine(@"       .-=||  | |=-.   ");
+                                Console.WriteLine(@"       `-=#$%&%$#=-'   ");
+                                Console.WriteLine(@"          | ;  :|     ");
+                                Console.WriteLine(@"_____.,-#%&$@%#&#~,._____");
+
+                                waveOut.Play();
+                                Thread.Sleep(2000);
+                                waveOut.Stop();
+
+                                if (!enemyFleet[0].Positions.Any() && !enemyFleet[1].Positions.Any() && !enemyFleet[2].Positions.Any() && !enemyFleet[3].Positions.Any() && !enemyFleet[4].Positions.Any())
+                                {
+                                    Console.WriteLine(@"");
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine(@"**************************");
+                                    Console.WriteLine(@"**************************");
+                                    Console.WriteLine(@"**************************");
+                                    Console.WriteLine(@"****You are the Winner****");
+                                    Console.WriteLine(@"**************************");
+                                    Console.WriteLine(@"**************************");
+                                    Console.WriteLine(@"**************************");
+                                    return;
+                                }
+                            }
+
+                            Console.WriteLine("");
+                            if (!isHit)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.WriteLine("Miss");
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.WriteLine("Yeah ! Nice hit !");
+                            }
+
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine("");
+
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("*****************************");
+                            Console.WriteLine("**It's your opponent's turn**");
+                            Console.WriteLine("*****************************");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            do
+                            {
+                                position = GetRandomPosition();
+
+                            }
+                            while (enemyShootPositions.Contains(position));
+
+                            enemyShootPositions.Add(position);
+
+                            isHit = GameController.GameController.CheckIsHit(myFleet, position);
+                            Console.WriteLine();
+
+                            if (isHit)
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                            else
+                                Console.ForegroundColor = ConsoleColor.Blue;
+
+                            Console.WriteLine("Computer shot in {0}{1} and {2}", position.Column, position.Row, isHit ? "has hit your ship !" : "miss");
+                            Console.ForegroundColor = ConsoleColor.White;
+
+                            if (isHit)
+                            {
+                                //Console.Beep();
+                                //Console.WriteLine(@"                \         .  ./");
+                                //Console.WriteLine(@"              \      .:"";'.:..""   /");
+                                //Console.WriteLine(@"                  (M^^.^~~:.'"").");
+                                //Console.WriteLine(@"            -   (/  .    . . \ \)  -");
+                                //Console.WriteLine(@"               ((| :. ~ ^  :. .|))");
+                                //Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
+                                //Console.WriteLine(@"                 -\  \     /  /-");
+                                //Console.WriteLine(@"                   \  \   /  /");
+
+                                Console.WriteLine(@"     _.-^^---....,,--       ");
+                                Console.WriteLine(@" _--                  --_  ");
+                                Console.WriteLine(@"<                        >)");
+                                Console.WriteLine(@"|                         | ");
+                                Console.WriteLine(@" \._                   _./  ");
+                                Console.WriteLine(@"    ```--. . , ; .--'''       ");
+                                Console.WriteLine(@"          | |   |             ");
+                                Console.WriteLine(@"       .-=||  | |=-.   ");
+                                Console.WriteLine(@"       `-=#$%&%$#=-'   ");
+                                Console.WriteLine(@"          | ;  :|     ");
+                                Console.WriteLine(@"_____.,-#%&$@%#&#~,._____");
+
+                                waveOut.Play();
+                                Thread.Sleep(2000);
+                                waveOut.Stop();
+
+                                if (!myFleet[0].Positions.Any() && !myFleet[1].Positions.Any() && !myFleet[2].Positions.Any() && !myFleet[3].Positions.Any() && !myFleet[4].Positions.Any())
+                                {
+                                    Console.WriteLine(@"");
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine(@"**************************");
+                                    Console.WriteLine(@"**************************");
+                                    Console.WriteLine(@"**************************");
+                                    Console.WriteLine(@"****Your opponent wins****");
+                                    Console.WriteLine(@"**************************");
+                                    Console.WriteLine(@"**************************");
+                                    Console.WriteLine(@"**************************");
+                                    return;
+                                }
+                            }
+                        }
                 }
-                while (enemyShootPositions.Contains(position));
-                enemyShootPositions.Add(position);
-
-                isHit = GameController.GameController.CheckIsHit(myFleet, position);
-                Console.WriteLine();
-
-                if (isHit)
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                else
-                    Console.ForegroundColor = ConsoleColor.Blue;
-
-                Console.WriteLine("Computer shot in {0}{1} and {2}", position.Column, position.Row, isHit ? "has hit your ship !" : "miss");
-                Console.ForegroundColor = ConsoleColor.White;
-
-                if (isHit)
-                {
-                    Console.Beep();
-
-                    //Console.WriteLine(@"                \         .  ./");
-                    //Console.WriteLine(@"              \      .:"";'.:..""   /");
-                    //Console.WriteLine(@"                  (M^^.^~~:.'"").");
-                    //Console.WriteLine(@"            -   (/  .    . . \ \)  -");
-                    //Console.WriteLine(@"               ((| :. ~ ^  :. .|))");
-                    //Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
-                    //Console.WriteLine(@"                 -\  \     /  /-");
-                    //Console.WriteLine(@"                   \  \   /  /");
-
-                    Console.WriteLine(@"     _.-^^---....,,--       ");
-                    Console.WriteLine(@" _--                  --_  ");
-                    Console.WriteLine(@"<                        >)");
-                    Console.WriteLine(@"|                         | ");
-                    Console.WriteLine(@" \._                   _./  ");
-                    Console.WriteLine(@"    ```--. . , ; .--'''       ");
-                    Console.WriteLine(@"          | |   |             ");
-                    Console.WriteLine(@"       .-=||  | |=-.   ");
-                    Console.WriteLine(@"       `-=#$%&%$#=-'   ");
-                    Console.WriteLine(@"          | ;  :|     ");
-                    Console.WriteLine(@"_____.,-#%&$@%#&#~,._____");
-
-
-                    if (!myFleet[0].Positions.Any() && !myFleet[1].Positions.Any() && !myFleet[2].Positions.Any() && !myFleet[3].Positions.Any() && !myFleet[4].Positions.Any())
-                    {
-                        Console.WriteLine(@"**************************");
-                        Console.WriteLine(@"**************************");
-                        Console.WriteLine(@"**************************");
-                        Console.WriteLine(@"**************************");
-                        Console.WriteLine(@"** The Computer is the Winner*****");
-                        Console.WriteLine(@"**************************");
-                        Console.WriteLine(@"**************************");
-                        Console.WriteLine(@"**************************");
-                        return;
-                    }
-                }
-            }
-            while (true);
+                while (true);
+            
         }
+
 
         private static Position GetRandomPosition()
         {
 
-            int rows = 8;
-            int lines = 8;
+            int rows = 10;
+            int lines = 10;
             var random = new Random();
             var letter = (Letters)random.Next(lines);
-            int number = random.Next(rows);
+            int number = random.Next(1, rows + 1);
             var position = new Position(letter, number);
             return position;
         }
@@ -256,7 +294,7 @@ namespace Battleship.Ascii
         {
             myFleet = GameController.GameController.InitializeShips().ToList();
 
-            Console.WriteLine("Please position your fleet (Game board size is from A to H and 1 to 8) :");
+            Console.WriteLine("Please position your fleet (Game board size is from A to J and 1 to 10) :");
 
             foreach (Ship ship in myFleet)
             {
@@ -322,7 +360,7 @@ namespace Battleship.Ascii
         {
             Position position = ParsePosition(input);
 
-            return position.Row >= 1 && position.Row <= 8 && !myFleet.SelectMany(x => x.Positions).Contains(position);
+            return position.Row >= 1 && position.Row <= 10 && !myFleet.SelectMany(x => x.Positions).Contains(position);
         }
 
         private static bool IsSecondPositionValid(Ship ship, string input)
@@ -340,13 +378,13 @@ namespace Battleship.Ascii
             if (position1.Row - ship.Size >= 0 && !myFleet.SelectMany(x => x.Positions).Contains(up)) //up
                 validPositions.Add(up);
 
-            if (position1.Row + ship.Size <= 8 && !myFleet.SelectMany(x => x.Positions).Contains(down)) // down
+            if (position1.Row + ship.Size <= 10 && !myFleet.SelectMany(x => x.Positions).Contains(down)) // down
                 validPositions.Add(down);
 
             if (position1.Column - ship.Size >= 0 && !myFleet.SelectMany(x => x.Positions).Contains(left)) //left
                 validPositions.Add(left);
 
-            if (position1.Column + ship.Size <= Letters.H && !myFleet.SelectMany(x => x.Positions).Contains(right)) //right
+            if (position1.Column + ship.Size <= Letters.J && !myFleet.SelectMany(x => x.Positions).Contains(right)) //right
                 validPositions.Add(right);
 
             Position position = ParsePosition(input);
