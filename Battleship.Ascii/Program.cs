@@ -102,7 +102,12 @@ namespace Battleship.Ascii
             do
             {
                 Console.WriteLine();
-                Console.WriteLine("Player, it's your turn");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("**************************");
+                Console.WriteLine("**Player, it's your turn**");
+                Console.WriteLine("**************************");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("");
                 Console.WriteLine("Enter coordinates for your shot :");
                 Position position = ParsePosition(Console.ReadLine());
 
@@ -135,7 +140,25 @@ namespace Battleship.Ascii
                     }
                 }
 
-                Console.WriteLine(isHit ? "Yeah ! Nice hit !" : "Miss");
+                Console.WriteLine("");
+                if (!isHit)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("Miss");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Yeah ! Nice hit !");
+                }
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("*****************************");
+                Console.WriteLine("**It's your opponent's turn**");
+                Console.WriteLine("*****************************");
+                Console.ForegroundColor = ConsoleColor.White;
                 do
                 {
                     position = GetRandomPosition();
@@ -146,7 +169,15 @@ namespace Battleship.Ascii
 
                 isHit = GameController.GameController.CheckIsHit(myFleet, position);
                 Console.WriteLine();
+
+                if (isHit)
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                else
+                    Console.ForegroundColor = ConsoleColor.Blue;
+
                 Console.WriteLine("Computer shot in {0}{1} and {2}", position.Column, position.Row, isHit ? "has hit your ship !" : "miss");
+                Console.ForegroundColor = ConsoleColor.White;
+
                 if (isHit)
                 {
                     Console.Beep();
