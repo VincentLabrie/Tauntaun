@@ -63,21 +63,23 @@ namespace Battleship.Ascii
             string letter = input;
             int number;
 
-            do
-            {
+            //do
+            //{
                 letter = input.ToUpper().Substring(0, 1);
                 int.TryParse(input.Substring(1, 1), out number);
 
                 isPositionValid = Enum.IsDefined(typeof(Letters), letter) && number >= 1 && number <= grid.Rows;
+            if(!isPositionValid)
+                throw new ArgumentException("Bruh");
 
-                if (!isPositionValid)
-                {
-                    Console.WriteLine("Coordinates are invalid!");
-                    Console.WriteLine("Enter coordinates for your shot :");
-                    input = Console.ReadLine();
-                }
-            }
-            while (!isPositionValid);
+            //    if (!isPositionValid)
+            //    {
+            //        Console.WriteLine("Coordinates are invalid!");
+            //        Console.WriteLine("Enter coordinates for your shot :");
+            //        input = Console.ReadLine();
+            //    }
+            //}
+            //while (!isPositionValid);
 
             return new Position((Letters)Enum.Parse(typeof(Letters), letter), number);
         }
@@ -109,6 +111,7 @@ namespace Battleship.Ascii
                         using (var wavReader = new WaveFileReader(@"Explosion.wav"))
                         {
                             waveOut.Init(wavReader);
+                            waveOut.Volume = 0.5f;
                             Console.WriteLine();
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("**************************");
@@ -138,7 +141,7 @@ namespace Battleship.Ascii
                             }
 
 
-                            bool isHit = GameController.GameController.CheckIsHit(enemyFleet, position);
+                            (bool isHit, Ship hitShip) = GameController.GameController.CheckIsHit(enemyFleet, position);
                             if (isHit)
                             {
                                 //Console.Beep();
@@ -167,6 +170,14 @@ namespace Battleship.Ascii
                                 Thread.Sleep(2000);
                                 waveOut.Stop();
 
+                                if (hitShip != null && !hitShip.Positions.Any())
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine(@"You sunk your opponent's {0}!", hitShip.Name);
+                                    Console.WriteLine(@"");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                }
+                                    
                                 if (!enemyFleet[0].Positions.Any() && !enemyFleet[1].Positions.Any() && !enemyFleet[2].Positions.Any() && !enemyFleet[3].Positions.Any() && !enemyFleet[4].Positions.Any())
                                 {
                                     Console.WriteLine(@"");
@@ -211,7 +222,7 @@ namespace Battleship.Ascii
 
                             enemyShootPositions.Add(position);
 
-                            isHit = GameController.GameController.CheckIsHit(myFleet, position);
+                            (isHit, hitShip) = GameController.GameController.CheckIsHit(myFleet, position);
                             Console.WriteLine();
 
                             if (isHit)
@@ -219,7 +230,7 @@ namespace Battleship.Ascii
                             else
                                 Console.ForegroundColor = ConsoleColor.Blue;
 
-                            Console.WriteLine("Computer shot in {0}{1} and {2}", position.Column, position.Row, isHit ? "has hit your ship !" : "miss");
+                            Console.WriteLine("Opponent shot in {0}{1} and {2}", position.Column, position.Row, isHit ? "has hit your ship !" : "miss");
                             Console.ForegroundColor = ConsoleColor.White;
 
                             if (isHit)
@@ -249,6 +260,14 @@ namespace Battleship.Ascii
                                 waveOut.Play();
                                 Thread.Sleep(2000);
                                 waveOut.Stop();
+
+                                if (hitShip != null && !hitShip.Positions.Any())
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine(@"");
+                                    Console.WriteLine(@"You opponent sunk your {0}!", hitShip.Name);
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                }
 
                                 if (!myFleet[0].Positions.Any() && !myFleet[1].Positions.Any() && !myFleet[2].Positions.Any() && !myFleet[3].Positions.Any() && !myFleet[4].Positions.Any())
                                 {

@@ -29,7 +29,7 @@ namespace Battleship.GameController
         ///     or
         ///     shot
         /// </exception>
-        public static bool CheckIsHit(IEnumerable<Ship> ships, Position shot)
+        public static (bool, Ship) CheckIsHit(IEnumerable<Ship> ships, Position shot)
         {
             if (ships == null)
             {
@@ -48,12 +48,12 @@ namespace Battleship.GameController
                     if (position.Equals(shot))
                     {
                         ship.Positions.Remove(position);
-                        return true;
+                        return (true, ship);
                     }
                 }
             }
 
-            return false;
+            return (false, null);
         }
 
         /// <summary>
