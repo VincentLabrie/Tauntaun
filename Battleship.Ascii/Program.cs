@@ -66,7 +66,7 @@ namespace Battleship.Ascii
             do
             {
                 letter = input.ToUpper().Substring(0, 1);
-                int.TryParse(input.Substring(1, 1), out number);
+                int.TryParse(input.Substring(1), out number);
 
                 isPositionValid = Enum.IsDefined(typeof(Letters), letter) && number >= 1 && number <= grid.Rows;
 
@@ -324,7 +324,7 @@ namespace Battleship.Ascii
                         isValid = true;
                         ship.AddPosition(position);
 
-                        if (positionIndex == 2) //Wee need to add the rest of the ship
+                        if (positionIndex == 2) //We need to add the rest of the ship
                         {
                             Position position1 = ship.Positions[0];
                             Position position2 = ship.Positions[1];

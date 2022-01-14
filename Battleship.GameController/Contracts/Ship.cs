@@ -65,7 +65,7 @@ namespace Battleship.GameController.Contracts
             }
 
             var letter = (Letters)Enum.Parse(typeof(Letters), input.ToUpper().Substring(0, 1));
-            var number = int.Parse(input.Substring(1, 1));
+            var number = int.Parse(input.Substring(1));
             Positions.Add(new Position { Column = letter, Row = number });
         }
 
